@@ -1,5 +1,5 @@
 # SomCSharp
-C# Verson of Simple Object Model which is ported from smarr's som-java 
+C# Verson of Simple Object Model which is ported from Stefan Marr's som-java 
 
 Read link 
 
