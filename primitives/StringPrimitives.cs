@@ -98,9 +98,14 @@ public class StringPrimitives : Primitives
 
             try
             {
-                frame.push(universe.newString(self.getEmbeddedString().Substring(
-                    (int)start.getEmbeddedInteger() - 1,
-                    (int)end.getEmbeddedInteger())));
+                var s = start.getEmbeddedInteger();
+                var e = end.getEmbeddedInteger();
+
+                frame.push(universe.newString(
+                    self.getEmbeddedString()
+                    .Substring(
+                    (int)s - 1,
+                    (int)(e-(s-1)))));
             }
             catch (IndexOutOfRangeException e)
             {
