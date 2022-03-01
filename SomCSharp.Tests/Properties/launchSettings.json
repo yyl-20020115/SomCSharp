@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SomCSharp.Tests": {
+      "commandName": "Project",
+      "workingDirectory": "$(SolutionDir)"
+    }
+  }
+}
