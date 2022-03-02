@@ -33,7 +33,7 @@ using static Som.Interpreter.Bytecodes;
 
 public class Universe
 {
-    public static void Main(params string[] arguments)
+    public static int Main(params string[] arguments)
     {
         // Create Universe
         var u = new Universe();
@@ -49,7 +49,7 @@ public class Universe
         }
 
         // Exit with error code 0
-        u.Exit(0);
+        return u.Exit(0);
     }
 
     public SAbstractObject Interpret(string[] arguments)
@@ -67,17 +67,7 @@ public class Universe
         fileSeparator = Path.DirectorySeparatorChar;
     }
 
-    public Universe()
-    {
-        this.interpreter = new (this);
-        this.symbolTable = new ();
-        this.avoidExit = false;
-        this.lastExitCode = 0;
-
-        current = this;
-    }
-
-    public Universe(bool avoidExit)
+    public Universe(bool avoidExit = false)
     {
         this.interpreter = new (this);
         this.symbolTable = new ();
@@ -91,17 +81,18 @@ public class Universe
 
     public Interpreter Interpreter => interpreter;
 
-    public void Exit(long errorCode)
+    public int Exit(int errorCode)
     {
         // Exit from the Java system
         if (!avoidExit)
         {
-            Environment.Exit((int)errorCode);
+            Environment.Exit(errorCode);
         }
         else
         {
-            lastExitCode = (int)errorCode;
+            lastExitCode = errorCode;
         }
+        return errorCode;
     }
 
     public int LastExitCode() => lastExitCode;

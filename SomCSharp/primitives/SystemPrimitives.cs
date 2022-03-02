@@ -60,7 +60,7 @@ public class SystemPrimitives : Primitives
         public override void Invoke(Frame frame, Interpreter interpreter)
         {
             var error = (SInteger)frame.Pop();
-            universe.Exit(error.EmbeddedInteger);
+            universe.Exit((int)error.EmbeddedInteger);
         }
     }
     public class GlobalPrimitive : SPrimitive

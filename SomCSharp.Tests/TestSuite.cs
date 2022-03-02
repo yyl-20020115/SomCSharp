@@ -2,12 +2,31 @@
 using System;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Som.Compiler;
 
 namespace SomCSharp.Tests;
 
 [TestClass]
 public class TestSuite
 {
+    protected int TestCore(params string[] arguments)
+    {
+        var u = new Universe(true);
+
+        // Start interpretation
+        try
+        {
+            u.Interpret(arguments);
+        }
+        catch (ProgramDefinitionError e)
+        {
+            u.ErrorExit(e.ToString());
+        }
+
+        // Exit with error code 0
+        return u.Exit(0);
+
+    }
     [TestMethod]
     public void PerformTest()
     {
@@ -26,7 +45,7 @@ public class TestSuite
 
             string[] args = { "-cp", "Smalltalk", "TestSuite/TestHarness.som", info.Name };
 
-            Universe.Main(args);
+            Assert.IsTrue(0== this.TestCore(args));
         }
 
     }
