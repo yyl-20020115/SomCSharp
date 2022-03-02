@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "SomCSharp": {
+      "commandName": "Project",
+      "commandLineArgs": "-cp SmallTalk Examples/Hello.som",
+      "workingDirectory": "C:\\Working\\SomCSharp\\SomCSharp"
+    }
+  }
+}

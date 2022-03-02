@@ -63,8 +63,8 @@ public class Universe
 
     static Universe()
     { /* static initializer */
-        pathSeparator = Path.DirectorySeparatorChar.ToString();
-        fileSeparator = Path.DirectorySeparatorChar.ToString();
+        Universe.pathSeparator = Path.PathSeparator;
+        fileSeparator = Path.DirectorySeparatorChar;
     }
 
     public Universe()
@@ -171,21 +171,29 @@ public class Universe
     // "../foo", "Test", "som"
     private string[] GetPathClassExt(string arg)
     {
+        string full = "", name = "", ext = "";
         int i = arg.LastIndexOf('.');
         if (i >= 0)
         {
-            arg = arg.Substring(0, i);
+            ext = arg[(i + 1)..];
+            arg = arg[..i];
         }
-        i = arg.LastIndexOf(Path.DirectorySeparatorChar);
+        i = arg.LastIndexOfAny(new char[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar });
         if (i >= 0)
         {
-            return new string[] { arg[..(i + 1)],arg[(i + 1)..] };
+            full = arg[..(i + 1)];
+            name = arg[(i + 1)..];
+
         }
-        return new string[] { ".\\", arg };
+        return new string[] { full, name, ext };
     }
 
     public void SetupClassPath(string cp)
     {
+        var paths = cp.Split(pathSeparator);
+
+        this.classPaths = this.SetupDefaultClassPath(paths.Length);
+        this.classPaths.AddRange(paths);
     }
 
     private List<string> SetupDefaultClassPath(int directories)
@@ -685,8 +693,8 @@ public class Universe
     protected Dictionary<SSymbol, SAbstractObject> globals = new();
     protected List<string> classPaths;
     protected bool dumpBytecodes;
-    public static string pathSeparator;
-    public static string fileSeparator;
+    public readonly static char pathSeparator;
+    public readonly static char fileSeparator;
     protected Interpreter interpreter;
     protected Dictionary<string, SSymbol> symbolTable;
     // TODO: this is not how it is supposed to be... it is just a hack to cope

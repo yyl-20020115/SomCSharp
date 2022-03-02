@@ -36,7 +36,7 @@ public class SourcecodeCompiler
         => new SourcecodeCompiler().CompileClassString(stmt, systemClass, universe);
     private SClass Compile(string path, string file,SClass systemClass, Universe universe)
     {
-        var fname = path + Universe.fileSeparator + file + ".som";
+        var fname = path + Universe.fileSeparator.ToString() + file + ".som";
         this.parser = new Parser(new StreamReader(fname), universe, fname);
         var result = Compile(systemClass);
         var cname = result.Name;

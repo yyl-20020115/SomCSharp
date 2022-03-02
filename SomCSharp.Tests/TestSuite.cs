@@ -1,11 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Som.VM;
+﻿using Som.VM;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SomCSharp.Tests;
 
@@ -26,7 +22,11 @@ public class TestSuite
         var files = Directory.GetFiles(folder, "*.som");
         foreach (var file in files)
         {
-            Universe.Main(file);
+            var info = new FileInfo(file);
+
+            string[] args = { "-cp", "Smalltalk", "TestSuite/TestHarness.som", info.Name };
+
+            Universe.Main(args);
         }
 
     }
