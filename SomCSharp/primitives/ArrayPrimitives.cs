@@ -58,7 +58,7 @@ public class ArrayPrimitives : Primitives
     public class LengthPrimitive : SPrimitive
     {
         public LengthPrimitive(Universe universe)
-            : base("length:", universe) { }
+            : base("length", universe) { }
         public override void Invoke(Frame frame, Interpreter interpreter)
         {
             var self = (SArray)frame.Pop();

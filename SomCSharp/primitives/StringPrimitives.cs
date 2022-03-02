@@ -47,7 +47,7 @@ public class StringPrimitives : Primitives
     public class AsSymbolPrimitive : SPrimitive
     {
         public AsSymbolPrimitive(Universe universe)
-            : base("asSymbol:", universe) { }
+            : base("asSymbol", universe) { }
         public override void Invoke(Frame frame, Interpreter interpreter)
         {
             var self = (SString)frame.Pop();

@@ -2,7 +2,7 @@
   "profiles": {
     "SomCSharp": {
       "commandName": "Project",
-      "commandLineArgs": "-cp core-lib/Smalltalk core-lib/Examples/Hello.som",
+      "commandLineArgs": "-cp .\\core-lib\\Smalltalk\\ .\\core-lib\\Examples\\Hello.som",
       "workingDirectory": "C:\\Working\\SomCSharp\\SomCSharp"
     }
   }

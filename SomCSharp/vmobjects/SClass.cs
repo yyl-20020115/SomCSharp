@@ -181,9 +181,9 @@ instanceInvokables;
         return true;
     }
 
-    public void AddInstancePrimitive(SPrimitive value) => AddInstancePrimitive(value, false);
+    //public void AddInstancePrimitive(SPrimitive value) => AddInstancePrimitive(value, false);
 
-    public void AddInstancePrimitive(SPrimitive value, bool suppressWarning)
+    public void AddInstancePrimitive(SPrimitive value, bool suppressWarning=true)
     {
         if (AddInstanceInvokable(value) && !suppressWarning)
         {

@@ -45,9 +45,9 @@ public abstract class Primitives
 
     public abstract void InstallPrimitives();
 
-    protected void InstallInstancePrimitive(SPrimitive primitive) => this.InstallInstancePrimitive(primitive, false);
+    //protected void InstallInstancePrimitive(SPrimitive primitive) => this.InstallInstancePrimitive(primitive, false);
 
-    protected void InstallInstancePrimitive(SPrimitive primitive, bool suppressWarning) =>
+    protected void InstallInstancePrimitive(SPrimitive primitive, bool suppressWarning = true) =>
         // Install the given primitive as an instance primitive in the holder
         // class
         this.holder.AddInstancePrimitive(primitive, suppressWarning);

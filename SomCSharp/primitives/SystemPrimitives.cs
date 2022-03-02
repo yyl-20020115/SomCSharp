@@ -66,7 +66,7 @@ public class SystemPrimitives : Primitives
     public class GlobalPrimitive : SPrimitive
     {
         public GlobalPrimitive(Universe universe)
-            : base("global", universe) { }
+            : base("global:", universe) { }
         public override void Invoke(Frame frame, Interpreter interpreter)
         {
             var argument = (SSymbol)frame.Pop();

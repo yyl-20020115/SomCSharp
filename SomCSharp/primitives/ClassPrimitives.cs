@@ -33,7 +33,7 @@ public class ClassPrimitives : Primitives
     public class NewPrimitive : SPrimitive
     {
         public NewPrimitive(Universe universe)
-            : base("new:", universe) { }
+            : base("new", universe) { }
         public override void Invoke(Frame frame, Interpreter interpreter)
         {
             var self = (SClass)frame.Pop();
