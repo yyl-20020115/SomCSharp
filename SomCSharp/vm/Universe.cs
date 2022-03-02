@@ -162,6 +162,18 @@ public class Universe
                 classPaths.Insert(0, split[0]);
             }
             remainingArgs[0]=split[1];
+            var cps = new HashSet<string>();    
+            foreach(var cp in classPaths)
+            {
+                var tcp = cp;
+                if (!cp.StartsWith(Environment.CurrentDirectory))
+                {
+                    tcp = Path.Combine(Environment.CurrentDirectory, cp);
+                }
+                var fcp = new FileInfo(tcp);
+                cps.Add(fcp.FullName);
+            }
+            this.classPaths = cps.ToList();
         }
 
         return remainingArgs.ToArray();
