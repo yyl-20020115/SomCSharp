@@ -35,14 +35,14 @@ public class SInteger : SNumber
     /**
      * Cache to store integers up to {@link #MAX_IDENTICAL_INT}.
      */
-    private static Dictionary<long, SInteger> CACHE = new();
+    private static readonly Dictionary<long, SInteger> CACHE = new();
 
     // Private variable holding the embedded integer
-    private long embeddedInteger;
+    private readonly long embeddedInteger;
 
     private SInteger(long value) => embeddedInteger = value;
 
-    public static SInteger getInteger(long value) 
+    public static SInteger GetInteger(long value) 
         => value > int.MaxValue ? new SInteger(value) : !CACHE.ContainsKey(value) ? (CACHE[value] = new SInteger(value)) : CACHE[value];
 
     public long EmbeddedInteger => embeddedInteger;
@@ -183,7 +183,7 @@ public class SInteger : SNumber
                 : universe.NewInteger(
                             (long)Math.Floor((double)(embeddedInteger % ((SInteger)right).EmbeddedInteger))));
 
-    public SInteger primRemainder(SNumber right, Universe universe) => right is SInteger s ? universe.NewInteger(embeddedInteger % s.embeddedInteger) : throw new InvalidOperationException();
+    public SInteger PrimRemainder(SNumber right, Universe universe) => right is SInteger s ? universe.NewInteger(embeddedInteger % s.embeddedInteger) : throw new InvalidOperationException();
     public override SNumber PrimBitAnd(SNumber right, Universe universe) => right is SBigInteger s
             ? universe.NewBigInteger(new BigInteger(embeddedInteger) & (
                 s.EmbeddedBiginteger))
@@ -236,7 +236,7 @@ public class SInteger : SNumber
                 s.EmbeddedBiginteger)
             : right is SDouble d
                 ? embeddedInteger == d.EmbeddedDouble
-                : right is SInteger i ? embeddedInteger == i.EmbeddedInteger : false;
+                : right is SInteger i && embeddedInteger == i.EmbeddedInteger;
         return AsSbool(result, universe);
     }
 

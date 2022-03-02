@@ -46,7 +46,7 @@ public static class Bytecodes
     public const byte RETURN_LOCAL = 14;
     public const byte RETURN_NON_LOCAL = 15;
 
-    private static string[] PADDED_BYTECODE_NAMES = new string[] {
+    private static readonly string[] PADDED_BYTECODE_NAMES = new string[] {
           "HALT            ", "DUP             ", "PUSH_LOCAL      ",
           "PUSH_ARGUMENT   ", "PUSH_FIELD      ", "PUSH_BLOCK      ",
           "PUSH_CONSTANT   ", "PUSH_GLOBAL     ", "POP             ",
@@ -55,9 +55,9 @@ public static class Bytecodes
           "RETURN_NON_LOCAL"
     };
 
-    private static string[] BYTECODE_NAMES = PADDED_BYTECODE_NAMES.Select(n => n.Trim()).ToArray();
+    private static readonly string[] BYTECODE_NAMES = PADDED_BYTECODE_NAMES.Select(n => n.Trim()).ToArray();
 
-    private static byte NUM_BYTECODES = (byte)BYTECODE_NAMES.Length;
+    private static readonly byte NUM_BYTECODES = (byte)BYTECODE_NAMES.Length;
 
     private static void CheckBytecodeIndex(byte bytecode)
     {
@@ -84,7 +84,7 @@ public static class Bytecodes
         BYTECODE_LENGTH[bytecode];
 
     // Static array holding lengths of each bytecode
-    private static int[] BYTECODE_LENGTH = new int[] {
+    private static readonly int[] BYTECODE_LENGTH = new int[] {
       1, // HALT
       1, // DUP
       3, // PUSH_LOCAL

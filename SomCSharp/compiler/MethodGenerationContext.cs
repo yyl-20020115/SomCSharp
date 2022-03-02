@@ -61,7 +61,7 @@ public class MethodGenerationContext
         : this(holderGenc, null) { }
     public void AddArgument(string arg) => arguments.Add(arg);
     public bool IsPrimitive => primitive;
-    public SInvokable Assemble(Universe universe)
+    public ISInvokable Assemble(Universe universe)
         => primitive ? SPrimitive.GetEmptyPrimitive(signature.EmbeddedString, universe) : AssembleMethod(universe);
 
     public SMethod AssembleMethod(Universe universe)

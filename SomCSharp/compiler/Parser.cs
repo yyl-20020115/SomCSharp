@@ -802,7 +802,7 @@ public class Parser
     protected void LiteralSymbol(MethodGenerationContext mgenc)
     {
         Expect(Pound);
-        var symb = sym == STString ? universe.SymbolFor(GetString()) : selector();
+        var symb = sym == STString ? universe.SymbolFor(GetString()) : Selector;
         mgenc.AddLiteralIfAbsent(symb, this);
         bcGen.EmitPUSHCONSTANT(mgenc, symb);
     }
@@ -852,12 +852,12 @@ public class Parser
         Expect(EndTerm);
     }
 
-    protected SSymbol selector() =>
+    protected SSymbol Selector =>
             sym == OperatorSequence || SymIn(singleOpSyms)
             ? BinarySelector()
-            : sym == Symbol.Keyword 
+            : sym == Symbol.Keyword
             || sym == KeywordSequence
-            ? KeywordSelector() 
+            ? KeywordSelector()
             : UnarySelector()
         ;
 

@@ -33,7 +33,7 @@ using static Som.Interpreter.Bytecodes;
 
 public class Universe
 {
-    public static void Main(string[] arguments)
+    public static void Main(params string[] arguments)
     {
         // Create Universe
         var u = new Universe();
@@ -169,7 +169,20 @@ public class Universe
 
     // take argument of the form "../foo/Test.som" and return
     // "../foo", "Test", "som"
-    private string[] GetPathClassExt(string arg) => Array.Empty<string>();
+    private string[] GetPathClassExt(string arg)
+    {
+        int i = arg.LastIndexOf('.');
+        if (i >= 0)
+        {
+            arg = arg.Substring(0, i);
+        }
+        i = arg.LastIndexOf(Path.DirectorySeparatorChar);
+        if (i >= 0)
+        {
+            return new string[] { arg[..(i + 1)],arg[(i + 1)..] };
+        }
+        return new string[] { ".\\", arg };
+    }
 
     public void SetupClassPath(string cp)
     {
@@ -267,7 +280,7 @@ public class Universe
         return bootstrapMethod;
     }
 
-    private SAbstractObject InterpretMethod(SAbstractObject receiver, SInvokable invokable, SArray arguments)
+    private SAbstractObject InterpretMethod(SAbstractObject receiver, ISInvokable invokable, SArray arguments)
     {
         var bootstrapMethod = CreateBootstrapMethod();
         // Create a fake bootstrap frame with the system object on the stack
@@ -399,7 +412,7 @@ public class Universe
 
     public SBlock NewBlock(SMethod method, Frame context, int arguments) =>
         // Allocate a new block and set its class to be the block class
-        new SBlock(method, context, GetBlockClass(arguments));
+        new (method, context, GetBlockClass(arguments));
 
     public SClass NewClass(SClass classClass)
     {
@@ -426,7 +439,7 @@ public class Universe
          int numberOfLocals,
          int maxNumStackElements, List<SAbstractObject> literals) =>
         // Allocate a new method and set its class to be the method class
-        new SMethod(signature, numberOfBytecodes,
+        new (signature, numberOfBytecodes,
             numberOfLocals, maxNumStackElements, literals);
 
     public SObject NewInstance(SClass instanceClass)
@@ -439,7 +452,7 @@ public class Universe
         return result;
     }
 
-    public SInteger NewInteger(long value) => SInteger.getInteger(value);
+    public SInteger NewInteger(long value) => SInteger.GetInteger(value);
 
     public SBigInteger NewBigInteger(BigInteger value) => new (value);
 
@@ -584,7 +597,7 @@ public class Universe
                 return result;
 
             }
-            catch (IOException e)
+            catch (IOException)
             {
                 // Continue trying different paths
             }

@@ -47,7 +47,7 @@ public class DoublePrimitives : Primitives
         public override void Invoke(Frame frame, Interpreter interpreter)
         {
             var self = (SDouble)frame.Pop();
-            frame.Push(self.primAsInteger(universe));
+            frame.Push(self.PrimAsInteger(universe));
         }
     }
     public class SqrtPrimitive : SPrimitive

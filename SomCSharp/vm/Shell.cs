@@ -99,7 +99,7 @@ public class Shell
                     currentFrame.Push(it);
 
                     // Lookup the run: method
-                    SInvokable initialize = myClass.LookupInvokable(
+                    ISInvokable initialize = myClass.LookupInvokable(
                         universe.SymbolFor("run:"));
 
                     // Invoke the run method

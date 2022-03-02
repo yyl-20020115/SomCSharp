@@ -72,9 +72,8 @@ public class StringPrimitives : Primitives
         {
             var op2 = frame.Pop();
             var op1 = (SString)frame.Pop(); // self
-            if (op2 is SString)
+            if (op2 is SString s)
             {
-                var s = (SString)op2;
                 if (s.EmbeddedString == (op1.EmbeddedString))
                 {
                     frame.Push(universe.trueObject);
@@ -107,7 +106,7 @@ public class StringPrimitives : Primitives
                     (int)s - 1,
                     (int)(e-(s-1)))));
             }
-            catch (IndexOutOfRangeException e)
+            catch (IndexOutOfRangeException)
             {
                 frame.Push(universe.NewString(
                     "Error - index out of bounds"));

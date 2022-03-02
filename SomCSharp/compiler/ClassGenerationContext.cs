@@ -33,9 +33,9 @@ public class ClassGenerationContext
     protected SSymbol superName;
     protected bool classSide;
     protected List<SSymbol> instanceFields = new ();
-    protected List<SInvokable> instanceMethods = new ();
+    protected List<ISInvokable> instanceMethods = new ();
     protected List<SSymbol> classFields = new ();
-    protected List<SInvokable> classMethods = new ();
+    protected List<ISInvokable> classMethods = new ();
     public SSymbol Name { get => name; set => this.name = value; }
     public ClassGenerationContext(Universe universe)
     {
@@ -55,7 +55,7 @@ public class ClassGenerationContext
         for (int i = 0; i < numFields; i++)
             classFields.Add(fieldNames.GetIndexableField(i) as SSymbol);
     }
-    public void AddMethod(SInvokable meth)
+    public void AddMethod(ISInvokable meth)
     {
         if (classSide)
             classMethods.Add(meth);

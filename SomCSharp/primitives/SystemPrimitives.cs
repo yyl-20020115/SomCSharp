@@ -50,7 +50,7 @@ public class SystemPrimitives : Primitives
             {
                 universe.ErrorExit(e.ToString());
             }
-            frame.Push(result != null ? result : universe.nilObject);
+            frame.Push(result ?? universe.nilObject);
         }
     }
     public class ExitPrimitive : SPrimitive
@@ -72,7 +72,7 @@ public class SystemPrimitives : Primitives
             var argument = (SSymbol)frame.Pop();
             frame.Pop(); // not required
             var result = universe.GetGlobal(argument);
-            frame.Push(result != null ? result : universe.nilObject);
+            frame.Push(result ?? universe.nilObject);
         }
     }
     public class GlobalPutPrimitive : SPrimitive
@@ -150,7 +150,7 @@ public class SystemPrimitives : Primitives
             {
                 frame.Push(universe.NewString(File.ReadAllText(p)));
             }
-            catch (IOException e)
+            catch (IOException)
             {
                 frame.Push(universe.nilObject);
             }

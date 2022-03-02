@@ -70,5 +70,5 @@ public class SArray : SAbstractObject
     public override SClass GetSOMClass(Universe universe) => universe.arrayClass;
 
     // Private array of indexable fields
-    private SAbstractObject[] indexableFields;
+    private readonly SAbstractObject[] indexableFields;
 }

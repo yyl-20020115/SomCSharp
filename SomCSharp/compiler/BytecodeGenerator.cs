@@ -45,7 +45,7 @@ public class BytecodeGenerator
     public void EmitSEND(MethodGenerationContext mgenc, SSymbol msg) => Emit2(mgenc, SEND, mgenc.FindLiteralIndex(msg));
     public void EmitPUSHCONSTANT(MethodGenerationContext mgenc, SAbstractObject lit) => Emit2(mgenc, PUSH_CONSTANT, mgenc.FindLiteralIndex(lit));
     public void EmitPUSHCONSTANT(MethodGenerationContext mgenc, byte literalIndex) => Emit2(mgenc, PUSH_CONSTANT, literalIndex);
-    private void Emit1(MethodGenerationContext mgenc, byte code) => mgenc.AddBytecode(code);
-    private void Emit2(MethodGenerationContext mgenc, byte code, byte idx) => mgenc.AddBytecode(code).AddBytecode(idx);
-    private void Emit3(MethodGenerationContext mgenc, byte code, byte idx, byte ctx) => mgenc.AddBytecode(code).AddBytecode(idx).AddBytecode(ctx);
+    protected static void Emit1(MethodGenerationContext mgenc, byte code) => mgenc.AddBytecode(code);
+    protected static void Emit2(MethodGenerationContext mgenc, byte code, byte idx) => mgenc.AddBytecode(code).AddBytecode(idx);
+    protected static void Emit3(MethodGenerationContext mgenc, byte code, byte idx, byte ctx) => mgenc.AddBytecode(code).AddBytecode(idx).AddBytecode(ctx);
 }

@@ -22,11 +22,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-using Som.VMObject;
+namespace Som.VMObject;
 using Som.Interpreter;
 using Som.VM;
 
-public abstract class SPrimitive : SAbstractObject, SInvokable
+public abstract class SPrimitive : SAbstractObject, ISInvokable
 {
     public virtual bool IsPrimitive => true;
 

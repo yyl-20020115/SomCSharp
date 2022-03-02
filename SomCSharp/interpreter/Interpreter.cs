@@ -356,7 +356,7 @@ public class Interpreter
          int bytecodeIndex)
     {
         // First try the inline cache
-        SInvokable invokable;
+        ISInvokable invokable;
 
         var m = Method;
         var cachedClass = m.GetInlineCacheClass(bytecodeIndex);
@@ -395,7 +395,7 @@ public class Interpreter
         ActivateOrDnu(selector, invokable);
     }
 
-    public void ActivateOrDnu(SSymbol selector, SInvokable invokable)
+    public void ActivateOrDnu(SSymbol selector, ISInvokable invokable)
     {
         if (invokable != null)
         {

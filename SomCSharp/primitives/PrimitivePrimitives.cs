@@ -1,6 +1,7 @@
 ﻿namespace Som.Primitives;
 using Som.Interpreter;
 using Som.VM;
+using Som.VMObject;
 
 
 public class PrimitivePrimitives : Primitives

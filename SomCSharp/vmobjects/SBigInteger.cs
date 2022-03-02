@@ -44,9 +44,9 @@ public class SBigInteger : SNumber
 
     public override SNumber PrimAsDouble(Universe universe) => universe.NewDouble(((double)embeddedBiginteger));
 
-    private SNumber AsNumber(BigInteger result, Universe universe) => result.GetBitLength() >= sizeof(long) ? universe.NewBigInteger(result) : universe.NewInteger(((long)result));
+    private static SNumber AsNumber(BigInteger result, Universe universe) => result.GetBitLength() >= sizeof(long) ? universe.NewBigInteger(result) : universe.NewInteger(((long)result));
 
-    private BigInteger AsBigInteger(SNumber right) => right is SInteger si ? new BigInteger(si.EmbeddedInteger) : ((SBigInteger)right).embeddedBiginteger;
+    private static BigInteger AsBigInteger(SNumber right) => right is SInteger si ? new BigInteger(si.EmbeddedInteger) : ((SBigInteger)right).embeddedBiginteger;
 
     public override SNumber PrimAdd(SNumber right, Universe universe) => right is SDouble d
             ? universe.NewDouble(
@@ -59,14 +59,14 @@ public class SBigInteger : SNumber
                 ((double)embeddedBiginteger) - d.EmbeddedDouble)
             : AsNumber(embeddedBiginteger - AsBigInteger(right), universe);
 
-    public override SNumber PrimMultiply(SNumber right, Universe universe) => right is SDouble
+    public override SNumber PrimMultiply(SNumber right, Universe universe) => right is SDouble @double
             ? universe.NewDouble(
-                ((double)embeddedBiginteger) * ((SDouble)right).EmbeddedDouble)
+                ((double)embeddedBiginteger) * @double.EmbeddedDouble)
             : AsNumber(embeddedBiginteger * AsBigInteger(right), universe);
 
     public override SNumber PrimDoubleDivide(SNumber right, Universe universe)
     {
-        var r = right is SInteger ? ((SInteger)right).EmbeddedInteger : (double)((SBigInteger)right).embeddedBiginteger;
+        var r = right is SInteger integer ? integer.EmbeddedInteger : (double)((SBigInteger)right).embeddedBiginteger;
         return universe.NewDouble(((double)embeddedBiginteger) / r);
     }
 

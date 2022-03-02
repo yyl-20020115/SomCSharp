@@ -37,7 +37,7 @@ public class SDouble : SNumber
 
     public override SClass GetSOMClass(Universe universe) => universe.doubleClass;
 
-    private double CoerceToDouble(SNumber o, Universe universe) => o is SDouble d
+    private static double CoerceToDouble(SNumber o, Universe universe) => o is SDouble d
             ? d.embeddedDouble
             : o is SInteger i
                 ? i.EmbeddedInteger
@@ -48,7 +48,7 @@ public class SDouble : SNumber
 
     public override SDouble PrimAsDouble(Universe universe) => this;
 
-    public SInteger primAsInteger(Universe universe) => universe.NewInteger((long)embeddedDouble);
+    public SInteger PrimAsInteger(Universe universe) => universe.NewInteger((long)embeddedDouble);
 
     public override SNumber PrimSqrt(Universe universe) => universe.NewDouble(Math.Sqrt(embeddedDouble));
 

@@ -24,7 +24,7 @@
 namespace Som.Primitives;
 using Som.Interpreter;
 using Som.VM;
-
+using Som.VMObject;
 public class BlockPrimitives : Primitives
 {
     public BlockPrimitives(Universe universe) : base(universe) { }

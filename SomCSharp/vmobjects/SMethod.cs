@@ -26,7 +26,7 @@ namespace Som.VMObject;
 using Som.Interpreter;
 using Som.VM;
 
-public class SMethod : SAbstractObject, SInvokable {
+public class SMethod : SAbstractObject, ISInvokable {
 
     public SMethod(SSymbol signature, int numberOfBytecodes,
         int numberOfLocals, int maxNumStackElements,
@@ -36,7 +36,7 @@ public class SMethod : SAbstractObject, SInvokable {
         this.numberOfLocals = numberOfLocals;
         this.bytecodes = new byte[numberOfBytecodes];
         inlineCacheClass = new SClass[numberOfBytecodes];
-        inlineCacheInvokable = new SInvokable[numberOfBytecodes];
+        inlineCacheInvokable = new ISInvokable[numberOfBytecodes];
         maximumNumberOfStackElements = maxNumStackElements;
         this.literals = literals?.ToArray();
     }
@@ -58,7 +58,7 @@ public class SMethod : SAbstractObject, SInvokable {
 
             // Make sure all nested invokables have the same holder
             for (int i = 0; i < literals.Length; i++)
-                if (literals[i] is SInvokable s)
+                if (literals[i] is ISInvokable s)
                     s.Holder = value;
         }
     }
@@ -94,9 +94,9 @@ public class SMethod : SAbstractObject, SInvokable {
 
     public SClass GetInlineCacheClass(int bytecodeIndex) => inlineCacheClass[bytecodeIndex];
 
-    public SInvokable GetInlineCacheInvokable(int bytecodeIndex) => inlineCacheInvokable[bytecodeIndex];
+    public ISInvokable GetInlineCacheInvokable(int bytecodeIndex) => inlineCacheInvokable[bytecodeIndex];
 
-    public void SetInlineCache(int bytecodeIndex, SClass receiverClass,SInvokable invokable)
+    public void SetInlineCache(int bytecodeIndex, SClass receiverClass,ISInvokable invokable)
     {
         inlineCacheClass[bytecodeIndex] = receiverClass;
         inlineCacheInvokable[bytecodeIndex] = invokable;
@@ -107,7 +107,7 @@ public class SMethod : SAbstractObject, SInvokable {
     // Private variable holding byte array of bytecodes
     protected byte[] bytecodes;
     protected SClass[] inlineCacheClass;
-    protected SInvokable[] inlineCacheInvokable;
+    protected ISInvokable[] inlineCacheInvokable;
     protected SAbstractObject[] literals;
     protected SSymbol signature;
     protected SClass holder;

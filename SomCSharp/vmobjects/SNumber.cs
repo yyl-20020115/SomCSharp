@@ -32,10 +32,10 @@ public abstract class SNumber : SAbstractObject
 
     public abstract SObject PrimLessThan(SNumber right, Universe universe);
 
-    protected SNumber IntOrBigInt(double value, Universe universe) => value > long.MaxValue || value < long.MinValue
+    protected static SNumber IntOrBigInt(double value, Universe universe) => value > long.MaxValue || value < long.MinValue
             ? universe.NewBigInteger(new BigInteger(Math.Round(value)))
             : universe.NewInteger((long)Math.Round(value));
 
-    protected SObject AsSbool(bool result, Universe universe) => result ? universe.trueObject : universe.falseObject;
+    protected static SObject AsSbool(bool result, Universe universe) => result ? universe.trueObject : universe.falseObject;
 
 }

@@ -129,7 +129,7 @@ public class Lexer
         }
         else if (this.CurrentChar== '-')
         {
-            if (this.buffer.Substring(bufferPosition).StartsWith(SEPARATOR))
+            if (this.buffer[bufferPosition..].StartsWith(SEPARATOR))
             {
                 this.builder = new ();
                 while(this.CurrentChar== '-')
@@ -147,7 +147,7 @@ public class Lexer
         {
             this.GetLexOperator();
         }
-        else if (this.buffer.Substring(bufferPosition).StartsWith(PRIMITIVE))
+        else if (this.buffer[bufferPosition..].StartsWith(PRIMITIVE))
         {
             this.bufferPosition += PRIMITIVE.Length;
             this.sym = Symbol.Primitive;
@@ -220,14 +220,14 @@ public class Lexer
         switch (current)
         {
             // @formatter:off
-            case 't': this.builder.Append("\t"); break;
-            case 'b': this.builder.Append("\b"); break;
-            case 'n': this.builder.Append("\n"); break;
-            case 'r': this.builder.Append("\r"); break;
-            case 'f': this.builder.Append("\f"); break;
+            case 't': this.builder.Append('\t'); break;
+            case 'b': this.builder.Append('\b'); break;
+            case 'n': this.builder.Append('\n'); break;
+            case 'r': this.builder.Append('\r'); break;
+            case 'f': this.builder.Append('\f'); break;
             case '\'': this.builder.Append('\''); break;
-            case '\\': this.builder.Append("\\"); break;
-            case '0': this.builder.Append("\0"); break;
+            case '\\': this.builder.Append('\\'); break;
+            case '0': this.builder.Append('\0'); break;
                 // @formatter:on
         }
         this.bufferPosition++;

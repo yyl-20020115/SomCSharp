@@ -166,7 +166,7 @@ public class IntegerPrimitives : Primitives
         {
             var right = (SNumber)frame.Pop();
             var left = (SInteger)frame.Pop();
-            frame.Push(left.primRemainder(right, universe));
+            frame.Push(left.PrimRemainder(right, universe));
         }
     }
     public class PrimBitAndPrimitive : SPrimitive

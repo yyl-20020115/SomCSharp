@@ -96,11 +96,11 @@ instanceInvokables;
         // Return the number of instance invokables in this class
         InstanceInvokables.NumberOfIndexableFields;
 
-    public SInvokable GetInstanceInvokable(int index) =>
+    public ISInvokable GetInstanceInvokable(int index) =>
         // Get the instance invokable with the given index
-        (SInvokable)InstanceInvokables.GetIndexableField(index);
+        (ISInvokable)InstanceInvokables.GetIndexableField(index);
 
-    public void SetInstanceInvokable(int index, SInvokable value)
+    public void SetInstanceInvokable(int index, ISInvokable value)
     {
         // Set this class as the holder of the given invokable
         value.Holder = this;
@@ -113,12 +113,12 @@ instanceInvokables;
         // Return the default number of fields in a class
         numberOfClassFields;
 
-    public SInvokable LookupInvokable(SSymbol signature)
+    public ISInvokable LookupInvokable(SSymbol signature)
     {
         // Lookup invokable and return if found
-        var invokable = invokablesTable[signature];
-        if (invokable != null) return invokable;
-
+        //var invokable = invokablesTable[signature];
+        //if (invokable != null) return invokable;
+        if(invokablesTable.TryGetValue(signature, out var invokable)) return invokable; 
         // Lookup invokable with given signature in array of instance invokables
         for (int i = 0; i < NumberOfInstanceInvokables; i++)
         {
@@ -159,7 +159,7 @@ instanceInvokables;
         return -1;
     }
 
-    public bool AddInstanceInvokable(SInvokable value)
+    public bool AddInstanceInvokable(ISInvokable value)
     {
         // Add the given invokable to the array of instance invokables
         for (int i = 0, c = NumberOfInstanceInvokables; i < c; i++)
@@ -250,13 +250,13 @@ instanceInvokables;
                 var ctor = primitivesClass.GetConstructor( BindingFlags.Public| BindingFlags.Instance,new Type[] { typeof(Universe) } );
                 ((Primitives)ctor.Invoke(new object[] { universe })).InstallPrimitivesIn(this);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Universe.Println("Primitives class " + className
                     + " cannot be instantiated");
             }
         }
-        catch (Exception e)
+        catch (Exception)
         {
             Universe.Println("Primitives class " + className + " not found");
         }
@@ -271,7 +271,7 @@ instanceInvokables;
     protected SArray instanceFields;
 
     // Mapping of symbols to invokables
-    protected Dictionary<SSymbol, SInvokable> invokablesTable;
+    protected Dictionary<SSymbol, ISInvokable> invokablesTable;
 
     // Static field indices and number of class fields
     protected static int numberOfClassFields = numberOfObjectFields;

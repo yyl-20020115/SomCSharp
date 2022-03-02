@@ -24,7 +24,7 @@
 namespace Som.VMObject;
 using Som.Interpreter;
 
-public interface SInvokable
+public interface ISInvokable
 {
     // Tells whether this is a primitive
     bool IsPrimitive { get; }
