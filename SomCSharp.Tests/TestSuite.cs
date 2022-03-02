@@ -22,9 +22,9 @@ public class TestSuite
         {
             u.ErrorExit(e.ToString());
         }
-
+        
         // Exit with error code 0
-        return u.Exit(0);
+        return u.LastExitCode();// u.Exit(0);
 
     }
     [TestMethod]
@@ -36,16 +36,20 @@ public class TestSuite
             current = Environment.CurrentDirectory =
                 new DirectoryInfo(current + "\\..\\..\\..\\..\\SomCSharp\\").FullName;
         }
-        var folder = Path.Combine(current, "core-lib", "TestSuite");
+        var folder = Path.Combine(current, "core-lib");
 
         var files = Directory.GetFiles(folder, "*.som");
         foreach (var file in files)
         {
             var info = new FileInfo(file);
 
-            string[] args = { "-cp", "Smalltalk", "TestSuite/TestHarness.som", info.Name };
-
-            Assert.IsTrue(0== this.TestCore(args));
+            var args = new[] { "-cp", "Smalltalk", "TestSuite/TestHarness.som", info.Name };
+            var pass = (0 == this.TestCore(args));
+            Assert.IsTrue(pass);
+            if (!pass)
+            {
+                Assert.Fail(info.Name);
+            }
         }
 
     }
