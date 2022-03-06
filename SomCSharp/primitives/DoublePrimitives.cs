@@ -207,6 +207,7 @@ public class DoublePrimitives : Primitives
     }
     public override void InstallPrimitives()
     {
+        //Console.WriteLine("install pri for double");
         this.InstallInstancePrimitive(new AsStringPrimitive(universe));
         this.InstallInstancePrimitive(new AsIntegerPrimitive(universe));
         this.InstallInstancePrimitive(new FromStringPrimitive(universe));

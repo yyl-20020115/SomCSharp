@@ -35,7 +35,10 @@ public class Universe
 {
     public static int Main(params string[] arguments)
     {
+        //--cp core-lib/Smalltalk core-lib/TestSuite/TestHarness.som
+        //Console.WriteLine(arguments.Aggregate((a,b)=>a.ToString()+" "+b.ToString()));
         // Create Universe
+        // arguments=new string[]{"--cp","core-lib/Smalltalk","core-lib/TestSuite/TestHarness.som"};
         var u = new Universe();
 
         // Start interpretation
@@ -46,6 +49,7 @@ public class Universe
         catch (ProgramDefinitionError e)
         {
             u.ErrorExit(e.ToString());
+            return u.Exit(-1);
         }
 
         // Exit with error code 0
@@ -113,12 +117,13 @@ public class Universe
 
         for (int i = 0; i < arguments.Length; i++)
         {
-            if (arguments[i] == ("-cp") && !sawOthers)
+            if ((arguments[i] == ("-cp")||arguments[i] == ("--cp")) && !sawOthers)
             {
                 if (i + 1 >= arguments.Length)
                 {
                     PrintUsageAndExit();
                 }
+                
                 SetupClassPath(arguments[i + 1]);
                 // Checkstyle: stop
                 ++i; // skip class path
@@ -197,6 +202,10 @@ public class Universe
 
         this.classPaths = this.SetupDefaultClassPath(paths.Length);
         this.classPaths.AddRange(paths);
+        // foreach(var cp2 in this.classPaths)
+        // {
+        //     Console.WriteLine(cp2);
+        // }
     }
 
     private List<string> SetupDefaultClassPath(int directories)
@@ -215,7 +224,7 @@ public class Universe
         {
             result.Add(Path.Combine(systemClassPath, "."));
 
-            result.Add(Path.Combine(systemClassPath, "core-lib\\Smalltalk"));
+            result.Add(Path.Combine(systemClassPath, "core-lib"+fileSeparator+"Smalltalk"));
         }
 
         result.Add(".");
