@@ -38,7 +38,7 @@ public class SObject : SAbstractObject
         // Get the number of fields in this object
         fields.Length;
 
-    public int DefaultNumberOfFields =>
+    public virtual int DefaultNumberOfFields =>
         // Return the default number of fields in an object
         numberOfObjectFields;
 

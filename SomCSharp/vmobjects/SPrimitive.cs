@@ -40,7 +40,7 @@ public abstract class SPrimitive : SAbstractObject, ISInvokable
 
     public virtual SClass Holder { get => holder; set => holder = value; }
 
-    public bool IsEmpty => false;
+    public virtual bool IsEmpty => false;
     // By default a primitive is not empty
 
     public override SClass GetSOMClass(Universe universe) => universe.primitiveClass;
@@ -58,7 +58,7 @@ public abstract class SPrimitive : SAbstractObject, ISInvokable
         }
 
         //@Override
-        public virtual bool IsEmpty => true;
+        public override bool IsEmpty => true;
         // The empty primitives are empty
     }
     public virtual void Invoke(Frame frame, Interpreter interpreter) { }

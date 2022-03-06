@@ -109,7 +109,7 @@ instanceInvokables;
         InstanceInvokables.SetIndexableField(index, (SAbstractObject)value);
     }
 
-    public virtual int DefaultNumberOfFields =>
+    public override int DefaultNumberOfFields =>
         // Return the default number of fields in a class
         numberOfClassFields;
 

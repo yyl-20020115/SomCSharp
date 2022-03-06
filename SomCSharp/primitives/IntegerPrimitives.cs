@@ -246,7 +246,8 @@ public class IntegerPrimitives : Primitives
             var rcvr = (SNumber)frame.Pop();
 
             frame.Push(universe.NewInteger(
-                rcvr is SInteger si ? si.EmbeddedInteger : (int)((SBigInteger)rcvr).EmbeddedBiginteger)
+                rcvr is SInteger si ? (int)(si.EmbeddedInteger&0xFFFFFFFFL) : 
+                (int)(((SBigInteger)rcvr).EmbeddedBiginteger&0xFFFFFFFFL))
                 );
         }
     }
@@ -257,7 +258,8 @@ public class IntegerPrimitives : Primitives
         public override void Invoke(Frame frame, Interpreter interpreter)
         {
             var rcvr = (SInteger)frame.Pop();
-            frame.Push(universe.NewInteger((long)(ulong)rcvr.EmbeddedInteger));
+            frame.Push(universe.NewInteger( 
+                (uint)(((ulong)rcvr.EmbeddedInteger)&0xffffffffUL)));
         }
     }
 
@@ -272,7 +274,7 @@ public class IntegerPrimitives : Primitives
         this.InstallInstancePrimitive(new MulPrimitive(universe));
         this.InstallInstancePrimitive(new DoubleDivPrimitive(universe));
         this.InstallInstancePrimitive(new IntegerDivPrimitive(universe));
-        this.InstallInstancePrimitive(new FromStringPrimitive(universe));
+        this.InstallClassPrimitive(new FromStringPrimitive(universe));
         this.InstallInstancePrimitive(new ModuloPrimitive(universe));
         this.InstallInstancePrimitive(new RemainderPrimitive(universe));
         this.InstallInstancePrimitive(new PrimBitAndPrimitive(universe));

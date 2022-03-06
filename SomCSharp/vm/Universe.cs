@@ -38,7 +38,7 @@ public class Universe
         //--cp core-lib/Smalltalk core-lib/TestSuite/TestHarness.som
         //Console.WriteLine(arguments.Aggregate((a,b)=>a.ToString()+" "+b.ToString()));
         // Create Universe
-        // arguments=new string[]{"--cp","core-lib/Smalltalk","core-lib/TestSuite/TestHarness.som"};
+        // arguments=new string[]{"-cp","core-lib/Smalltalk","core-lib/TestSuite/TestHarness.som"};
         var u = new Universe();
 
         // Start interpretation
@@ -397,9 +397,19 @@ public class Universe
         return systemObject;
     }
 
-    public SSymbol SymbolFor(string text) =>
+    public SSymbol SymbolFor(string text)
+    {
+        if (text == "PositiveInfinity")
+        {
+
+        }
+        if(!this.symbolTable.TryGetValue(text, out var s))
+        {
+            this.symbolTable[text] = s = NewSymbol(text);
+        }
+        return s;
+    }
         // Lookup the symbol in the symbol table
-        this.symbolTable.TryGetValue(text, out var s) ? s : NewSymbol(text);
 
     public SArray NewArray(long length) => new (nilObject, length);
 

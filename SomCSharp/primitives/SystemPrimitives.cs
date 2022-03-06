@@ -78,7 +78,7 @@ public class SystemPrimitives : Primitives
     public class GlobalPutPrimitive : SPrimitive
     {
         public GlobalPutPrimitive(Universe universe)
-            : base("global:put", universe) { }
+            : base("global:put:", universe) { }
         public override void Invoke(Frame frame, Interpreter interpreter)
         {
             var value = frame.Pop();

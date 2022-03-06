@@ -147,7 +147,7 @@ public class DoublePrimitives : Primitives
         public override void Invoke(Frame frame, Interpreter interpreter)
         {
             var rcvr = (SDouble)frame.Pop();
-            var result = (long)Math.Round(rcvr.EmbeddedDouble);
+            var result = (long)Math.Round(rcvr.EmbeddedDouble, MidpointRounding.AwayFromZero);
             frame.Push(universe.NewInteger(result));
         }
     }
@@ -210,7 +210,6 @@ public class DoublePrimitives : Primitives
         //Console.WriteLine("install pri for double");
         this.InstallInstancePrimitive(new AsStringPrimitive(universe));
         this.InstallInstancePrimitive(new AsIntegerPrimitive(universe));
-        this.InstallInstancePrimitive(new FromStringPrimitive(universe));
         this.InstallInstancePrimitive(new SqrtPrimitive(universe));
         this.InstallInstancePrimitive(new AddPrimitive(universe));
         this.InstallInstancePrimitive(new SubPrimitive(universe));
@@ -222,6 +221,7 @@ public class DoublePrimitives : Primitives
         this.InstallInstancePrimitive(new RoundPrimitive(universe));
         this.InstallInstancePrimitive(new SinPrimitive(universe));
         this.InstallInstancePrimitive(new CosPrimitive(universe));
-        this.InstallInstancePrimitive(new PositiveInfinityPrimitive(universe));
+        this.InstallClassPrimitive(new PositiveInfinityPrimitive(universe));
+        this.InstallClassPrimitive(new FromStringPrimitive(universe));
     }
 }

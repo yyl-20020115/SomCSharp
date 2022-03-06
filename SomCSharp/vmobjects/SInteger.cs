@@ -170,18 +170,66 @@ public class SInteger : SNumber
                 ? universe.NewInteger((long)(embeddedInteger / d.EmbeddedDouble))
                 : universe.NewInteger(embeddedInteger / ((SInteger)right).EmbeddedInteger));
 
-    public override SNumber PrimModulo(SNumber right, Universe universe) =>
-        // Note: modulo semantics of SOM differ from Java, with respect to
-        // negative operands, but BigInteger doesn't support a negative
-        // second operand, so, we should get an exception, which we can
-        // properly handle once an application actually needs it.
-        right is SBigInteger s
-            ? (global::Som.VMObject.SNumber)universe.NewBigInteger(new BigInteger(embeddedInteger) % (
-                s.EmbeddedBiginteger))
-            : (global::Som.VMObject.SNumber)(right is SDouble d
-                ? universe.NewDouble(embeddedInteger % d.EmbeddedDouble)
-                : universe.NewInteger(
-                            (long)Math.Floor((double)(embeddedInteger % ((SInteger)right).EmbeddedInteger))));
+    public override SNumber PrimModulo(SNumber right, Universe universe)
+    // Note: modulo semantics of SOM differ from Java, with respect to
+    // negative operands, but BigInteger doesn't support a negative
+    // second operand, so, we should get an exception, which we can
+    // properly handle once an application actually needs it.
+    {
+        SNumber ret = universe.NewInteger(0);
+        if (right is SBigInteger s)
+        {
+            var vr = embeddedInteger;
+            var vl = s.EmbeddedBiginteger;
+            var sr = Math.Sign(vr);
+            var sl = s.EmbeddedBiginteger.Sign;
+            if (sr != sl)
+            {
+                var rm = new BigInteger(vr) % vl;
+                ret = universe.NewBigInteger(BigInteger.Abs(vl + rm) * sl);
+            }
+            else
+            {
+                ret = universe.NewBigInteger(new BigInteger(vr) % vl);
+            }
+        }
+        else if(right is SDouble d)
+        {
+            var vr = embeddedInteger;
+            var vl = d.EmbeddedDouble;
+            var sr = Math.Sign(vr);
+            var sl = Math.Sign(vl);
+            if (sr != sl)
+            {
+                var rm = sr % vl;
+                ret = universe.NewDouble(Math.Abs(vl + rm) * sl);
+            }
+            else
+            {
+                ret = universe.NewDouble(vr % vl);
+            }
+        }
+        else if(right is SInteger l)
+        {
+            var vr = embeddedInteger;
+            var vl = l.EmbeddedInteger;
+            var sr = Math.Sign(vr);
+            var sl = Math.Sign(vl);
+            
+            if (sr != sl)
+            {
+                //10 % -3 == -2
+                //-10 % 3 == 2
+                var rm = (long)Math.Floor((double)(vr % vl));
+                ret = universe.NewInteger(Math.Abs(vl+rm)*sl);
+            }
+            else
+            {
+                ret = universe.NewInteger((long)Math.Floor((double)(vr % vl)));
+            }
+        }
+        return ret;
+    }
 
     public SInteger PrimRemainder(SNumber right, Universe universe) => right is SInteger s ? universe.NewInteger(embeddedInteger % s.embeddedInteger) : throw new InvalidOperationException();
     public override SNumber PrimBitAnd(SNumber right, Universe universe) => right is SBigInteger s
