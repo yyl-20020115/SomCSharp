@@ -274,7 +274,6 @@ public class IntegerPrimitives : Primitives
         this.InstallInstancePrimitive(new MulPrimitive(universe));
         this.InstallInstancePrimitive(new DoubleDivPrimitive(universe));
         this.InstallInstancePrimitive(new IntegerDivPrimitive(universe));
-        this.InstallClassPrimitive(new FromStringPrimitive(universe));
         this.InstallInstancePrimitive(new ModuloPrimitive(universe));
         this.InstallInstancePrimitive(new RemainderPrimitive(universe));
         this.InstallInstancePrimitive(new PrimBitAndPrimitive(universe));
@@ -285,5 +284,6 @@ public class IntegerPrimitives : Primitives
         this.InstallInstancePrimitive(new PrimRightShiftPrimitive(universe));
         this.InstallInstancePrimitive(new As32BitSignedValuePrimitive(universe));
         this.InstallInstancePrimitive(new As32BitUnsignedValuePrimitive(universe));
+        this.InstallClassPrimitive(new FromStringPrimitive(universe));
     }
 }
