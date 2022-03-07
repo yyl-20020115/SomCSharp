@@ -115,7 +115,6 @@ IntegerTest = TestCase (
   )
   testIntegerLiterals = (
     "Make sure the parser reads literals correctly. So, check some basic properties"
-    'test integer literals' print.
     self assert: 2 / 2                                     equals:                       1.
     self assert: 50 + 50                                   equals:                     100.
     self assert: 92233720368 * 100000000 + 54775807        equals:     9223372036854775807.
