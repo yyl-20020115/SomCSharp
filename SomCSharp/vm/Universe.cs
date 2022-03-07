@@ -33,12 +33,17 @@ using static Som.Interpreter.Bytecodes;
 
 public class Universe
 {
+    /// <summary>
+    /// dotnet run -- -cp core-lib/Smalltalk core-lib/TestSuite/TestHarness.som
+    /// *nix:
+    /// dotnet run -- -cp core-lib/Smalltalk:core-lib/TestSuite:core-lib/SomSom/src/compiler:core-lib/SomSom/src/vm:core-lib/SomSom/src/vmobjects:core-lib/SomSom/src/interpreter:core-lib/SomSom/src/primitives core-lib/SomSom/tests/SomSomTests.som
+    /// Windows:
+    /// dotnet run -- -cp core-lib/Smalltalk:core-lib/TestSuite:core-lib/SomSom/src/compiler:core-lib/SomSom/src/vm:core-lib/SomSom/src/vmobjects:core-lib/SomSom/src/interpreter:core-lib/SomSom/src/primitives core-lib/SomSom/tests/SomSomTests.som
+    /// </summary>
+    /// <param name="arguments"></param>
+    /// <returns></returns>
     public static int Main(params string[] arguments)
     {
-        //--cp core-lib/Smalltalk core-lib/TestSuite/TestHarness.som
-        //Console.WriteLine(arguments.Aggregate((a,b)=>a.ToString()+" "+b.ToString()));
-        // Create Universe
-        // arguments=new string[]{"-cp","core-lib/Smalltalk","core-lib/TestSuite/TestHarness.som"};
         var u = new Universe();
 
         // Start interpretation
@@ -63,12 +68,6 @@ public class Universe
 
         // Initialize the known universe
         return Initialize(arguments);
-    }
-
-    static Universe()
-    { /* static initializer */
-        Universe.pathSeparator = Path.PathSeparator;
-        fileSeparator = Path.DirectorySeparatorChar;
     }
 
     public Universe(bool avoidExit = false)
@@ -200,12 +199,14 @@ public class Universe
     {
         var paths = cp.Split(pathSeparator);
 
-        this.classPaths = this.SetupDefaultClassPath(paths.Length);
-        this.classPaths.AddRange(paths);
-        // foreach(var cp2 in this.classPaths)
-        // {
-        //     Console.WriteLine(cp2);
-        // }
+        var retpaths = this.SetupDefaultClassPath(paths.Length);
+        retpaths.AddRange(paths);
+        foreach(var path in retpaths)
+        {
+            var newpath = path.Replace('/', fileSeparator);
+            this.classPaths.Add(newpath);
+            //Console.WriteLine(newpath);
+        }
     }
 
     private List<string> SetupDefaultClassPath(int directories)
@@ -713,10 +714,10 @@ public class Universe
     public SClass trueClass;
     public SClass falseClass;
     protected Dictionary<SSymbol, SAbstractObject> globals = new();
-    protected List<string> classPaths;
+    protected List<string> classPaths =new();
     protected bool dumpBytecodes;
-    public readonly static char pathSeparator;
-    public readonly static char fileSeparator;
+    public readonly static char pathSeparator = ':'; //should be ':'
+    public readonly static char fileSeparator = Path.DirectorySeparatorChar;
     protected Interpreter interpreter;
     protected Dictionary<string, SSymbol> symbolTable;
     // TODO: this is not how it is supposed to be... it is just a hack to cope
