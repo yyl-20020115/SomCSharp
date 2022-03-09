@@ -175,7 +175,7 @@ public class SystemPrimitives : Primitives
         public override void Invoke(Frame frame, Interpreter interpreter)
         {
             frame.Pop(); // ignore
-            int time = (int)(Stopwatch.GetTimestamp() * 10 - sp.startMicroTime);
+            int time = (int)(new Stopwatch().ElapsedMilliseconds - sp.startMicroTime);
             frame.Push(universe.NewInteger(time));
         }
     }
@@ -207,8 +207,8 @@ public class SystemPrimitives : Primitives
         this.InstallInstancePrimitive(new TicksPrimitive(universe,this));
         this.InstallInstancePrimitive(new TimePrimitive(universe,this));
 
-        this.startMicroTime = Stopwatch.GetTimestamp() * 10;
-        this.startTime = this.startMicroTime / 1000L;        
+        this.startMicroTime = new Stopwatch().ElapsedMilliseconds;
+        this.startTime = new Stopwatch().ElapsedMilliseconds;        
     }
 
     protected long startTime;

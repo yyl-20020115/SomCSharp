@@ -3,7 +3,7 @@ FrameTests = TestCase (
 
   initialize = (
     u := Universe new: true.
-    u setupClassPath: 'Smalltalk:TestSuite/BasicInterpreterTests'.
+    u setupClassPath: 'core-lib/Smalltalk:core-lib/TestSuite/BasicInterpreterTests'.
     u initializeObjectSystem.
 
     a := SSymbol new: 'a'.

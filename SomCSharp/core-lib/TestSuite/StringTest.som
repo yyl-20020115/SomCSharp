@@ -69,7 +69,7 @@ StringTest = TestCase (
     str := '
 '.
     self assert: '\n' equals: (str charAt: 1).
-    self assert: 1 equals: str length.
+    self assert: 2 equals: str length. "this should be 2 in windows \r\n"
   )
 
   testPrimSubstringFrom = (

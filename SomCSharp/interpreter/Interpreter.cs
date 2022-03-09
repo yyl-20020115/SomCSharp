@@ -196,9 +196,15 @@ public class Interpreter
 
         // Get the receiver from the stack
         var receiver = Frame.GetStackElement(numberOfArguments - 1);
+        if(receiver != null)
+        {
+            // Send the message
+            Send(signature, receiver.GetSOMClass(universe), bytecodeIndex);
+        }
+        else
+        {
 
-        // Send the message
-        Send(signature, receiver.GetSOMClass(universe), bytecodeIndex);
+        }
     }
 
     public SAbstractObject Start()

@@ -37,10 +37,31 @@ public class SArray : SAbstractObject
         }
     }
 
-    public SAbstractObject GetIndexableField(long index) => indexableFields[(int)index];
+    public SAbstractObject GetIndexableField(long index)
+    {
+        int i = (int)index;
+        if (i >= 0 && i < indexableFields.Length)
+        {
+            return indexableFields[i];
+        }
+        else
+        {
+            return null;
+        }
+    }
 
-    public void SetIndexableField(long index, SAbstractObject value) => indexableFields[(int)index] = value;
+    public void SetIndexableField(long index, SAbstractObject value)
+    {
+        int i = (int)index;
+        if(i>=0 && i< indexableFields.Length)
+        {
+            indexableFields[i] = value;
+        }
+        else
+        {
 
+        }
+    }
     public int NumberOfIndexableFields => indexableFields.Length;
 
     public SArray CopyAndExtendWith(SAbstractObject value, Universe universe)

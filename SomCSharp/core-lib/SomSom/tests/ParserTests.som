@@ -151,7 +151,7 @@ ParserTests = TestCase (
     files do: [:f |
       | cgenc parser u |
       u := self initUniverse.
-      parser := Parser load: 'Smalltalk/' + f in: u.
+      parser := Parser load: 'core-lib/Smalltalk/' + f in: u.
       self deny: parser isNil.
       cgenc := parser classdef ].
   )
@@ -195,7 +195,7 @@ ParserTests = TestCase (
     files do: [:f |
       | cgenc parser u |
       u := self initUniverse.
-      parser := Parser load: 'TestSuite/' + f in: u.
+      parser := Parser load: 'core-lib/TestSuite/' + f in: u.
       self deny: parser isNil.
       cgenc := parser classdef ].
   )
@@ -204,7 +204,7 @@ ParserTests = TestCase (
     | u |
     universe ifNil: [
       u := Universe new.
-      u setupClassPath: 'Smalltalk:TestSuite'.
+      u setupClassPath: 'core-lib/Smalltalk:core-lib/TestSuite'.
       u initializeObjectSystem.
       universe := u ].
     ^ universe

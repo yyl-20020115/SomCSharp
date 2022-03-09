@@ -34,8 +34,8 @@ SomTests = TestCase (
     | args u exitCode |
     args := Array new: 4.
     args at: 1 put: '-cp'.
-    args at: 2 put: 'Smalltalk'.
-    args at: 3 put: 'TestSuite/TestHarness.som'.
+    args at: 2 put: 'core-lib/Smalltalk'.
+    args at: 3 put: 'core-lib/TestSuite/TestHarness.som'.
     args at: 4 put: testName.
 
     u := Universe new: true.
