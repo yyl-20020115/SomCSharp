@@ -400,10 +400,6 @@ public class Universe
 
     public SSymbol SymbolFor(string text)
     {
-        if (text == "PositiveInfinity")
-        {
-
-        }
         if(!this.symbolTable.TryGetValue(text, out var s))
         {
             this.symbolTable[text] = s = NewSymbol(text);
